@@ -1,0 +1,267 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="Content-Style-Type" content="text/css" />
+        <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+        <meta name="keywords" content="Gomadare"/>
+        <meta name="description" content="ソフトウェア工学IIの小テスト"/>
+        <meta name="author" content="Gomadare"/>
+        <link rev="made" href="index.html"/>
+        <link rel="index" href="index.html"/>
+        <link rel="stylesheet" href="../style.css" type="text/css" />
+        <title>ソフトウェア工学IIの小テスト「樹状整列」マニュアル</title>
+    </head>
+    <body>
+        <div id="menu">
+            <ul>
+                <li><a href="../index.html">ホーム</a></li>
+                <li><a href="../Requirement/index.html">要求仕様書</a></li>
+                <li><a href="../DevelopmentPlan/index.html">開発計画書</a></li>
+                <li><a href="../BasicDesign/index.html">基本設計書</a></li>
+                <li><a href="../DetailDesign/index.html">詳細設計書</a></li>
+                <li><a href="../TestSpecification/index.html">テスト仕様書</a></li>
+                <li><a href="../TestResult/index.html">テスト結果</a></li>
+                <li><a href="../DevelopmentResult/index.html">開発実績</a></li>
+                <li><a href="../Program/index.html">プログラム</a></li>
+                <li><a href="../Manual/index.html" class="current">マニュアル</a></li>
+            </ul>
+        </div>
+        <hr>
+        <h2>ソフトウェア工学IIの小テスト「樹状整列」マニュアル</h2>
+        <div class="belt">
+            <h3><a name="Install">インストール</a>（実行ファイルの作り方）</h3>
+        </div>
+        <ol>
+            <li><a href="../Program/tree.zip">tree.zip</a>のアーカイブファイルを適当な場所に展開する。</li>
+            <pre class="belt">
+    $ unzip tree.zip
+    Archive:  tree.zip
+       creating: tree/
+       creating: tree/.dist/
+       creating: tree/.dist/Example.app/
+       creating: tree/.dist/Example.app/Contents/
+       creating: tree/.dist/Example.app/Contents/java/
+       creating: tree/lib/
+       creating: tree/mvc/
+       creating: tree/nbproject/
+       creating: tree/text/
+       creating: tree/tree/
+      inflating: tree/.dist/Example.app/Contents/java/tree.jar  
+      inflating: tree/Makefile           
+      inflating: tree/build.xml          
+      inflating: tree/lib/appbundler-1.0ea.jar  
+      inflating: tree/mvc.jar            
+      inflating: tree/mvc/Controller.class  
+      inflating: tree/mvc/Controller.java  
+      inflating: tree/mvc/Example.java   
+      inflating: tree/mvc/Model.class    
+      inflating: tree/mvc/Model.java     
+      inflating: tree/mvc/View.class     
+      inflating: tree/mvc/View.java      
+      inflating: tree/nbproject/build-impl.xml  
+      inflating: tree/nbproject/project.properties  
+      inflating: tree/nbproject/project.xml  
+      inflating: tree/text/forest.txt    
+      inflating: tree/text/semilattice.txt  
+      inflating: tree/text/tree.txt      
+      inflating: tree/tree.mf            
+      inflating: tree/tree/Constants.java  
+      inflating: tree/tree/Element.java  
+      inflating: tree/tree/Example.java  
+      inflating: tree/tree/TreeController.java  
+      inflating: tree/tree/TreeModel.java  
+      inflating: tree/tree/TreeView.java  
+  </pre>
+            <li>展開して得られるtreeというディレクトリへ移る。</li>
+            <pre class="belt">$ cd tree</pre>
+            <li>中身を確認する。</li>
+            <pre class="belt">
+    $ ls *
+    Makefile	build.xml	mvc.jar		tree.mf
+
+    lib:
+    appbundler-1.0ea.jar
+
+    mvc:
+    Controller.class	Model.class		View.java
+    Controller.java		Model.java
+    Example.java		View.class
+
+    nbproject:
+    build-impl.xml		project.properties	project.xml
+
+    text:
+    forest.txt	semilattice.txt	tree.txt
+
+    tree:
+    Constants.java		Example.java		TreeModel.java
+    Element.java		TreeController.java	TreeView.java
+</pre>
+            <li>makeする。</li>
+            <pre class="belt">
+    $ make
+    env LC_ALL=ja_JP.UTF-8 ant jar
+    Picked up _JAVA_OPTIONS: -Dfile.encoding=UTF-8
+    Buildfile: /Users/yoshidaseiya/Desktop/tree/build.xml
+
+    -init-private:
+
+    -init-user:
+
+    -init-project:
+
+    -init-macrodef-property:
+
+    -do-init:
+
+    -init-check:
+
+    -init-presetdef-jar:
+
+    init:
+
+    -pre-pre-compile:
+        [mkdir] Created dir: /Users/yoshidaseiya/Desktop/tree/Classes
+
+    compile:
+        [javac] Compiling 10 source files to /Users/yoshidaseiya/Desktop/tree/Classes
+        [javac] Picked up _JAVA_OPTIONS: -Dfile.encoding=UTF-8
+
+    -do-jar-with-tree:
+
+    -do-jar-without-tree:
+    [j2seproject1:jar] Building jar: /Users/yoshidaseiya/Desktop/tree/tree.jar
+
+    -do-jar-with-mainclass:
+
+    -do-jar-with-libraries:
+
+    jar:
+
+    BUILD SUCCESSFUL
+    Total time: 3 seconds
+    </pre>
+            <li>tree.jarが生成されていることを確かめる。</li>
+            <pre class="belt">
+    $ ls *
+    Makefile	build.xml	mvc.jar		tree.jar	tree.mf
+
+    Classes:
+    mvc	tree
+
+    lib:
+    appbundler-1.0ea.jar
+
+    mvc:
+    Controller.class	Model.class		View.java
+    Controller.java		Model.java
+    Example.java		View.class
+
+    nbproject:
+    build-impl.xml		project.properties	project.xml
+
+    text:
+    forest.txt	semilattice.txt	tree.txt
+
+    tree:
+    Constants.java		Example.java		TreeModel.java
+    Element.java		TreeController.java	TreeView.java
+</pre>
+            <li>生成したtree.jarをアプリケーション（tree.app）の中にインストールする。</li>
+            <pre class="belt">
+    $ make install
+    env LC_ALL=ja_JP.UTF-8 ant install
+    Picked up _JAVA_OPTIONS: -Dfile.encoding=UTF-8
+    Buildfile: /Users/yoshidaseiya/Desktop/tree/build.xml
+
+    -init-private:
+
+    -init-user:
+
+    -init-project:
+
+    -init-macrodef-property:
+
+    -do-init:
+
+    -init-check:
+
+    -init-presetdef-jar:
+
+    init:
+
+    -pre-pre-jar:
+        [mkdir] Created dir: /Users/yoshidaseiya/Desktop/tree/dist
+
+    -post-install:
+    [bundleapp] Creating app bundle: Example
+         [copy] Copying 1 file to /Users/yoshidaseiya/Desktop/tree/dist/Example.app/Contents/Java
+
+    install:
+
+    BUILD SUCCESSFUL
+    Total time: 0 seconds
+</pre>
+        </ol>
+        <div class="belt">
+            <h3><a name="Execution">実行方法</a>（実行ファイルの動かし方）</h3>
+        </div>
+        <p>実行するためのコマンドは以下の通りである。</p>
+        <blockquote><code>java -jar tree.jar</code></blockquote>
+        <p>Mac OS Xの場合には、アプリケーションMVC.appをダブルクリックするほうが簡便である。</p>
+        <blockquote>tree.app<img class="borderless" src="images/tree.icns" width="128" height="128" alt="tree.icns"></blockquote>
+        <p>また、openコマンドでMVC.appを開いても実行可能である。</p>
+        <blockquote><code>open tree.app</code></blockquote>
+        <p>以下に実行例を示す。</p>
+        <blockquote>
+            <table class="belt" summary="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <table class="content" summary="table">
+                                <tbody>
+                                    <tr>
+                                        <td class="center-small"><a href="images/Snapshot0.jpg"><img class="borderless" src="thumbnails/Snapshot0.jpg" width="500" height="384" alt="Snapshot0"></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="belt" summary="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <table class="content" summary="table">
+                                <tbody>
+                                    <tr>
+                                        <td class="center-small"><a href="images/Snapshot1.jpg"><img class="borderless" src="thumbnails/Snapshot1.jpg" width="500" height="464" alt="Snapshot1"></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="belt" summary="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <table class="content" summary="table">
+                                <tbody>
+                                    <tr>
+                                        <td class="center-small"><a href="images/Snapshot2.jpg"><img class="borderless" src="thumbnails/Snapshot2.jpg" width="500" height="464" alt="Snapshot2"></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </blockquote>
+        <hr>
+        <div class="right-small">Copyright 2014 Project Gomadare, Updated: 2014/07/13</div>
+    </body>
+</html>

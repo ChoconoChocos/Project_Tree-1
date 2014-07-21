@@ -1,0 +1,1311 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="Content-Style-Type" content="text/css" />
+        <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+        <meta name="keywords" content="Gomadare"/>
+        <meta name="description" content="ソフトウェア工学IIの小テスト"/>
+        <meta name="author" content="Gomadare"/>
+        <link rev="made" href="index.html"/>
+        <link rel="index" href="index.html"/>
+        <link rel="stylesheet" href="../style.css" type="text/css" />
+        <title>ソフトウェア工学IIの小テスト「樹状整列」プログラム</title>
+    </head>
+    <body>
+        <div id="menu">
+            <ul>
+                <li><a href="../index.html">ホーム</a></li>
+                <li><a href="../Requirement/index.html">要求仕様書</a></li>
+                <li><a href="../DevelopmentPlan/index.html">開発計画書</a></li>
+                <li><a href="../BasicDesign/index.html">基本設計書</a></li>
+                <li><a href="../DetailDesign/index.html">詳細設計書</a></li>
+                <li><a href="../TestSpecification/index.html">テスト仕様書</a></li>
+                <li><a href="../TestResult/index.html">テスト結果</a></li>
+                <li><a href="../DevelopmentResult/index.html">開発実績</a></li>
+                <li><a href="../Program/index.html" class="current">プログラム</a></li>
+                <li><a href="../Manual/index.html">マニュアル</a></li>
+            </ul>
+        </div>
+        <hr>
+        <h2>ソフトウェア工学IIの小テスト「樹状整列」プログラム</h2>
+        <ul>
+            <li><a href="#Example">Example</a>（メインクラス）</li>
+            <li><a href="#Element">Element</a></li>
+            <li><a href="#Constants">Constants</a></li>
+            <li><a href="#TreeModel">TreeModel</a>（モデル）</li>
+            <li><a href="#TreeView">TreeView</a>（ビュー）</li>
+            <li><a href="#TreeController">TreeController</a>（コントローラ）</li>
+        </ul>
+        <ul>
+            <li><a href="#tree.mf">tree.mf</a>（マニフェストファイル）</li>
+            <li><a href="#Makefile">Makefile</a>（メイクファイル）</li>
+            <li><a href="#build.xml">build.xml</a>（ビルドファイル）</li>
+        </ul>
+        <ul>
+            <li><a href="#build-impl.xml">build-impl.xml</a></li>
+            <li><a href="#project.xml">project.xml</a></li>
+            <li><a href="#project.properties">project.properties</a></li>
+        </ul>
+        <div class="belt">
+            <h3><a name="Example">Example（メインクラス）</a></h3>
+        </div>
+        <pre>
+    package tree;
+
+    import java.awt.Dimension;
+    import javax.swing.JFrame;
+
+    /**
+     * 樹状整列におけるメインクラス
+     */
+    public class Example extends Object
+    {
+        public static void <a name="Example-main">main(String[] arguments)</a>
+        {
+            TreeModel aTreeModel = new TreeModel();
+            TreeController aTreeController = new TreeController();
+            TreeView aTreeView = new TreeView(aTreeModel, aTreeController);
+            JFrame aWindow = new JFrame("Tree");
+            aWindow.getContentPane().add(aTreeView);
+            aWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            aWindow.setMinimumSize(new Dimension(Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2));
+            aWindow.setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+            aWindow.setVisible(true);
+            return;
+        }
+    }
+        </pre>
+        <div class="belt">
+            <h3><a name="Element">Element</a></h3>
+        </div>
+        <pre>
+    package tree;
+
+
+    import java.awt.Color;
+    import java.awt.Font;
+    import java.awt.Point;
+    import java.util.ArrayList;
+    import javax.swing.border.LineBorder;
+    import javax.swing.JLabel;
+
+    /**
+     * 樹状整列における要素(Node)
+     */
+    public class Element extends JLabel
+    {
+        /**
+         * ノードの親を格納するフィールド
+         */
+        private ArrayList&lt;Integer&gt; parents;
+
+        /**
+         * ノードの子を格納するフィールド
+         */
+        private ArrayList&lt;Integer&gt; children;
+
+        /**
+         * 自身の番号を束縛する。
+         */
+        private int aNodeNumber;
+
+        /**
+         * 自身のノードの名前を束縛する。
+         */
+        private String aNodeName;
+
+        /**
+         * 描画位置を束縛する。
+         */
+        private Point aPosition;
+
+        /**
+         * 移動後の描画位置を束縛する。
+         */
+        private Point afterPosition;
+
+        /**
+         * 自身の高さを束縛する。
+         */
+        private int aHeight;
+
+        /**
+         * 自身の幅を束縛する。
+         */
+        private int aWidth;
+
+        /**
+         * 変位させる座標を文字列のy座標変位に設定し、束縛する。
+         */
+        private static int index = Constants.DISPLACEMENT;
+
+        /**
+         * 指定されたノード番号、ノードの名前と描画する位置を設定し、描画における詳細設定をする。
+         * @param number 指定されたノード番号
+         * @param name 指定されたノードの名前
+         */
+        public <a name="Element-Element">Element(int number, String name)</a>
+        {
+            this.aNodeNumber = number;
+            this.aNodeName = name;
+            this.parents = new ArrayList&lt;Integer&gt;();
+            this.children = new ArrayList&lt;Integer&gt;();
+            this.setFont(new Font("Arial", Font.PLAIN, Constants.FONT_SIZE));
+            this.setText(this.aNodeName);
+            this.setBorder(new LineBorder(Color.black, 1));
+            this.setSize(this.getPreferredSize());
+            Point aPoint = new Point(0, index);
+            this.setPosition(aPoint);
+            index += 20;
+        }
+
+        /**
+         * 指定された親のノード番号をリストに格納する。
+         * @param parents 親のノード番号。
+         */
+        public void <a name="Element-setParents">setParents(int parents)</a>
+        {
+            this.parents.add(parents);
+        }
+
+        /**
+         * 自分の親をアレイリストで返す。
+         * @return 自分の親のアレイリスト。
+         */
+        public ArrayList&lt;Integer&gt; <a name="Element-getParents">getParents()</a>
+        {
+            return this.parents;
+        }
+
+        /**
+         * 指定された子のノード番号をリストに格納する。
+         * @param child 子のノード番号。
+         */
+        public void <a name="Element-setChildren">setChildren(int child)</a>
+        {
+            this.children.add(child);
+        }
+
+        /**
+         * 指定された子のリストを格納する。
+         * @param aList 指定された子のリスト。
+         */
+        public void <a name="Element-resetChildren">resetChildren(ArrayList&lt;Integer&gt; aList)</a>
+        {
+            this.children = aList;
+        }
+
+        /**
+         * 自分の子をアレイリストで返す。
+         * @return 自分の子のアレイリスト。
+         */
+        public ArrayList&lt;Integer&gt; <a name="Element-getChildren">getChildren()</a>
+        {
+            return this.children;
+        }
+
+        /**
+         * 自分のノード番号を返す。
+         * @return 自分のノード番号。
+         */
+        public int <a name="Element-getNodeNumber">getNodeNumber()</a>
+        {
+            return this.aNodeNumber;
+        }
+
+        /**
+         * 指定された高さに設定する。
+         * @param aNumber 指定された高さ。
+         */
+        public void <a name="Element-setHeight">setHeight(int aNumber)</a>
+        {
+            this.aHeight = aNumber;
+        }
+
+        /**
+         * 自分の高さを返す。
+         * @return 自分の高さ。
+         */
+        public int <a name="Element-getHeight">getHeight()</a>
+        {
+            return this.aHeight;
+        }
+
+        /**
+         * 指定された幅に設定する。
+         * @param aNumber 指定された子要素のノード番号。
+         */
+        public void <a name="Element-setWidth">setWidth(int aNumber)</a>
+        {
+            this.aWidth = aNumber;
+        }
+
+        /**
+         * 自分の幅を返す。
+         * @return 自分の幅。
+         */
+        public int <a name="Element-getWidth">getWidth()</a>
+        {
+            return this.aWidth;
+        }
+
+        /**
+         * 自分のノードの名前を返す。
+         * @return 自分のノードの名前。
+         */
+        public String <a name="Element-getNodeName">getNodeName()</a>
+        {
+            return this.aNodeName;
+        }
+
+        /**
+         * 指定されたポイント（座標）に描画位置（初期位置）を設定する。
+         * @param aPoint 指定された座標。
+         */
+        public void <a name="Element-setPosition">setPosition(Point aPoint)</a>
+        {
+            this.aPosition = aPoint;
+        }
+
+        /**
+         * 描画位置（初期位置）をポイント（座標）で返す。
+         * @return 描画位置のポイント（座標）。
+         */
+        public Point <a name="Element-getPosition">getPosition()</a>
+        {
+            return this.aPosition;
+        }
+
+        /**
+         * 指定されたポイント（座標）に描画位置（移動後の位置）を設定する。
+         * @param aPoint 指定された座標。
+         */
+        public void <a name="Element-setAfterPosition">setAfterPosition(Point aPoint)</a>
+        {
+            this.afterPosition = aPoint;
+        }
+
+        /**
+         * 描画位置（移動後の位置）をポイント（座標）で返す。
+         * @return 描画位置のポイント（座標）。
+         */
+        public Point <a name="Element-getAfterPosition">getAfterPosition()</a>
+        {
+            return this.afterPosition;
+        }
+    }
+        </pre>
+        <div class="belt">
+            <h3><a name="Constants">Constants</a></h3>
+        </div>
+        <pre>
+    package tree;
+
+    /**
+     * 定数を設定するConstantsクラス
+     */
+    public class Constants extends Object
+    {
+        /**
+         * 文字列のフォントサイズ。
+         */
+        public static final int FONT_SIZE = 12;
+
+        /**
+         * ファイル選択ダイアログの幅。
+         */
+        public static final int DIALOG_WIDTH = 300;
+
+        /**
+         * ファイル選択ダイアログの高さ。
+         */
+        public static final int DIALOG_HEIGHT = 200;
+
+        /**
+         * 木を描画するウィンドウの幅。
+         */
+        public static final int WINDOW_WIDTH = 800;
+
+        /**
+         * 木を描画するウィンドウの高さ。
+         */
+        public static final int WINDOW_HEIGHT = 800;
+
+        /**
+         * 文字列と四角との間隔。
+         */
+        public static final int RECT_BLANKSPASE = 2;
+
+        /**
+         * 四角との高さ間隔。
+         */
+        public static final int HEIDHT_SPASE = 2;
+
+        /**
+         * 文字列のy座標変位。
+         */
+        public static final int DISPLACEMENT = 18;
+    }
+        </pre>
+        <div class="belt">
+            <h3><a name="TreeModel">TreeModel（モデル）</a></h3>
+        </div>
+        <pre>
+    package tree;
+
+    import java.awt.Dimension;
+    import java.awt.event.MouseEvent;
+    import java.awt.Point;
+    import java.io.BufferedReader;
+    import java.io.File;
+    import java.io.FileNotFoundException;
+    import java.io.FileReader;
+    import java.io.IOException;
+    import java.util.ArrayList;
+    import java.util.Collections;
+    import mvc.Model;
+
+    /**
+     * 樹状整列におけるモデル
+     */
+    public class TreeModel extends Model
+    {
+        /**
+         * ノード(Element)をリストで束縛する。
+         */
+        private static ArrayList&lt;Element&gt; elementList;
+
+        /**
+         * ノード(Element)をリストで束縛する（ソートしたもの）。
+         */
+        private ArrayList&lt;Element&gt; sortElementList = new ArrayList&lt;Element&gt;();
+
+        /**
+         * y座標を設定するための値。
+         */
+        private static int indexSort = Constants.DISPLACEMENT;
+
+        /**
+         * インスタンスを生成して初期化して応答する。
+         * またテキストファイルを読み込み、樹の要素をエレメントに設定し、描画する順にソートする。
+         * @param aFilePath 指定されたファイルパス。
+         */
+        public <a name="TreeModel-TreeModel">TreeModel()</a>
+        {
+            super();
+            TreeView aTreeView = new TreeView(this, new TreeController());
+            this.setElement(aTreeView.fileSelectFrame());
+            this.sort();
+        }
+
+        /**
+         * 指定されたファイルパスを読み込み、要素を設定する。
+         * @param aFilePath 指定されたファイルパス。
+         */
+        public void <a name="TreeModel-setElement">setElement(String aFilePath)</a>
+        {
+            FileReader aFileReader = null;
+            BufferedReader aBufferedReader = null;
+            elementList = new ArrayList&lt;Element&gt;();
+            ArrayList&lt;String&gt; treesList = new ArrayList&lt;String&gt;();
+            ArrayList&lt;String&gt; nodesList = new ArrayList&lt;String&gt;();
+            ArrayList&lt;String&gt; branchesList = new ArrayList&lt;String&gt;();
+            String aLine = null;
+            try
+            {
+                aFileReader = new FileReader(aFilePath);
+            }
+            catch(FileNotFoundException aFileNotFoundException)
+            {
+                aFileNotFoundException.printStackTrace();
+            }
+            aBufferedReader = new BufferedReader(aFileReader);
+            try
+            {
+                aLine = aBufferedReader.readLine();
+            }
+            catch(IOException anIOException)
+            {
+                anIOException.printStackTrace();
+            }
+            while(!aLine.equals("nodes:"))
+            {
+                try
+                {
+                    aLine = aBufferedReader.readLine();
+                }
+                catch(IOException anIOException)
+                {
+                    anIOException.printStackTrace();
+                }
+                if(!aLine.equals("nodes:"))
+                {
+                    treesList.add(aLine);
+                }
+            }
+            while(!aLine.equals("branches:"))
+            {
+                try
+                {
+                    aLine = aBufferedReader.readLine();
+                }
+                catch(IOException anIOException)
+                {
+                    anIOException.printStackTrace();
+                }
+                if(!aLine.equals("branches:"))
+                {
+                    nodesList.add(aLine);
+                }
+            }
+            while(aLine != null)
+            {
+                try
+                {
+                    aLine = aBufferedReader.readLine();
+                }
+                catch(IOException anIOException)
+                {
+                    anIOException.printStackTrace();
+                }
+                if(aLine != null)
+                {
+                    branchesList.add(aLine);
+                }
+            }
+            for(String aString : nodesList)
+            {
+                String[] string = aString.split(", ");
+                getElementList().add(new Element(Integer.parseInt(string[0]), string[1]));
+            }
+            for(String aString : branchesList)
+            {
+                String[] string = aString.split(", ");
+                getElementList().get(Integer.parseInt(string[0]) - 1).setChildren(Integer.parseInt(string[1]));
+                getElementList().get(Integer.parseInt(string[1]) - 1).setParents(Integer.parseInt(string[0]));
+            }
+        }
+
+        /**
+         * 子をアルファベット順にソートしたのち描画する順にソートしアレイリストに設定する。
+         */
+        public void <a name="TreeModel-sort">sort()</a>
+        {
+            for(Element aElement : getElementList())
+            {
+                if(aElement.getChildren().size() &gt; 0){
+                    ArrayList&lt;String&gt; nodeNameList = new ArrayList&lt;String&gt;();
+                    ArrayList&lt;Integer&gt; childrenList = new ArrayList&lt;Integer&gt;();
+                    for(int index : aElement.getChildren())
+                    {
+                        nodeNameList.add(getElementList().get(index - 1).getNodeName());
+                    }
+                    Collections.sort(nodeNameList);
+                    for(String aString : nodeNameList)
+                    {
+                        for(Element element : getElementList())
+                        {
+                            if(element.getNodeName() == aString)
+                            {
+                                childrenList.add(element.getNodeNumber());
+                            }
+                        }
+                    }
+                    aElement.resetChildren(childrenList);
+                }
+            }
+            for(Element aElement : getElementList())
+            {
+                Dimension aDimension = aElement.getSize();
+                aElement.setWidth(aDimension.width);
+                aElement.setHeight(aDimension.height);
+            }
+            for(Element aElement : getElementList())
+            {
+                if(aElement.getParents().size() == 0)
+                {
+                    searchChild(aElement);
+                }
+            }
+        }
+
+        /**
+         * 指定された要素から再帰的に子をたどっていき、アレイリストに格納する。
+         * またノードを描くx座標とy座標を設定する。
+         * @param aElement 指定された要素。
+         */
+        public void <a name="TreeModel-searchChild">searchChild(Element aElement)</a>
+        {
+            Point aPoint;
+            if(aElement.getParents().size() == 0)
+            {
+                aPoint = new Point(0, 18);
+            }
+            else
+            {
+                aPoint = new Point(getElementList().get(aElement.getParents().get(0) - 1).getAfterPosition().x + getElementList().get(aElement.getParents().get(0) - 1).getWidth() + 25, indexSort);
+            }
+
+            aElement.setAfterPosition(aPoint);
+            indexSort += aElement.getHeight() + 4;
+            sortElementList.add(aElement);
+            if(aElement.getChildren().size() == 0)
+            {
+                return;
+            }
+            else
+            {
+                int index = 0;
+                while(index &lt; aElement.getChildren().size())
+                {
+                    searchChild(getElementList().get((aElement.getChildren().get(index)) - 1));
+                    index++;
+                }
+            }
+        }
+
+        /**
+         * マウスクリックした位置を座標取得し、その座標範囲に要素があれば出力
+         * @param aPoint ピクチャ座標
+         * @param aMouseEvent マウスのイベント
+         */
+        public void <a name="TreeModel-mouseClicked">mouseClicked(Point aPoint, MouseEvent aMouseEvent)</a>
+        {
+            ArrayList&lt;Element&gt; element = this.getElementList();
+            for (Element aElement : element) {
+                if(aElement.getAfterPosition().x &lt;= aPoint.x && aElement.getAfterPosition().x + aElement.getWidth() &gt;= aPoint.x)
+                {
+                    if(aElement.getAfterPosition().y &gt;= aPoint.y && aElement.getAfterPosition().y - aElement.getHeight() &lt;= aPoint.y)
+                    {
+                        System.out.println(aElement.getNodeName());
+                    }
+                }
+            }
+            return;
+        }
+
+        /**
+         * ノードのリストを返す。
+         * @return ノードのリスト。
+         */
+        public ArrayList&lt;Element&gt; <a name="TreeModel-getElementList">getElementList()</a>
+        {
+            return elementList;
+        }
+
+        /**
+         * ノードをソートしたリストを返す。
+         * @return ノードのソートリスト。
+         */
+        public ArrayList&lt;Element&gt; <a name="TreeModel-getElementSortList">getElementSortList()</a>
+        {
+            return sortElementList;
+        }
+    }
+        </pre>
+        <div class="belt">
+            <h3><a name="TreeView">TreeView（ビュー）</a></h3>
+        </div>
+        <pre>
+    package tree;
+
+    import java.awt.Color;
+    import java.awt.Dimension;
+    import java.awt.Graphics;
+    import java.awt.HeadlessException;
+    import java.awt.Point;
+    import java.awt.image.BufferedImage;
+    import java.io.File;
+    import java.lang.NullPointerException;
+    import java.util.ArrayList;
+    import javax.swing.JFileChooser;
+    import javax.swing.JFrame;
+    import javax.swing.JPanel;
+    import mvc.View;
+
+    /**
+     * 樹状整列におけるビュー
+     */
+    public class TreeView extends View
+    {
+        /**
+         * 情報操作をするTreeModelのインスタンスを束縛する。
+         */
+        protected TreeModel aTreeModel;
+
+        /**
+         * 制御を司るTreeControllerのインスタンスを束縛する。
+         */
+        protected TreeController aTreeController;
+
+        /**
+         * インスタンスを生成して応答する。
+         * 指定されたモデルの依存物となり、指定されたコントローラにモデルとビューを設定し、スクロール量をを(0, 0)に設定する。
+         * @param aTreeModel 指定されたツリーモデル
+         * @param aTreeController 指定されたツリーコントローラ
+         */
+        public <a name="TreeView-TreeView">TreeView(TreeModel aTreeModel, TreeController aTreeController)</a>
+        {
+            super(aTreeModel, aTreeController);
+            this.model = aTreeModel;
+            this.controller = aTreeController;
+        }
+
+        private static int index = -1;
+        /**
+         * 指定されたグラフィクスに背景色（白色）でビュー全体を塗り、その上ににモデルの内容物を描画する。
+         * スクロール量に応じてモデル画像(picture)をパネル内に描画する。
+         * @param baseGraphics 指定されたグラフィックス
+         */
+        public void <a name="TreeView-paintComponent">paintComponent(Graphics baseGraphics)</a>
+        {
+            this.setSize(3500, 3500);
+            int width = this.getWidth();
+            int height = this.getHeight();
+
+            baseGraphics.setColor(Color.white);
+            baseGraphics.fillRect(0, 0, width, height);
+            BufferedImage picture = (BufferedImage)this.createImage(width, height);
+            Graphics aGraphics = picture.getGraphics();
+            aGraphics.setColor(Color.white);
+            aGraphics.fillRect(0, 0, width, height);
+            aGraphics.setColor(Color.black);
+
+            aTreeModel = (TreeModel)this.model;
+            aTreeController = (TreeController)this.controller;
+            ArrayList&lt;Element&gt; elementList = aTreeModel.getElementSortList();
+            if(index &gt;= 0 && index &lt; elementList.size())
+            {
+                elementList.get(index).setPosition(elementList.get(index).getAfterPosition());
+            }
+            index++;
+
+            //繋ぎ線
+            for(Element aElement : aTreeModel.getElementSortList())
+            {
+                if(aElement.getParents().size() != 0)
+                {
+                    Point Parents = aTreeModel.getElementList().get(aElement.getParents().get(0) - 1).getPosition();
+                    Point Children = aElement.getPosition();
+                    Dimension ParentsDimension = aTreeModel.getElementList().get(aElement.getParents().get(0) - 1).getSize();
+                    Dimension ChildrenDimension = aTreeModel.getElementList().get(aElement.getParents().get(0) - 1).getSize();
+
+                    aGraphics.drawLine(Parents.x + ParentsDimension.width + Constants.RECT_BLANKSPASE,
+                                       Parents.y - ParentsDimension.height/2, Children.x, Children.y - ChildrenDimension.height/2);
+                }
+            }
+
+            for(Element aElement : elementList)
+            {
+                Dimension aDimension = aElement.getSize();
+
+                aGraphics.setFont(aElement.getFont());
+                aGraphics.drawString(aElement.getNodeName(),
+                                     aElement.getPosition().x + Constants.RECT_BLANKSPASE,
+                                     aElement.getPosition().y - (Constants.DISPLACEMENT - Constants.FONT_SIZE - Constants.HEIDHT_SPASE));
+                aGraphics.drawRect(aElement.getPosition().x,
+                                   aElement.getPosition().y - Constants.DISPLACEMENT,
+                                   aDimension.width + Constants.RECT_BLANKSPASE,
+                                   aDimension.height);
+            }
+            Point aPoint = this.scrollAmount();
+            baseGraphics.drawImage(picture, 0-aPoint.x, 0-aPoint.y, this);
+
+            try
+            {
+                repaint();
+                Thread.sleep(100);
+            }
+            catch(InterruptedException aInterruptedException)
+            {
+                System.out.println(aInterruptedException);
+            }
+            return;
+        }
+
+        /**
+         * 読み込むファイルを指定させるウィンドウを表示し、指定されたファイルパスを文字列を返す。
+         * @return 読み込んだファイルのパスの文字列。
+         * バグ：JFileChooser.showOpenDialogの中で選択ダイアログが表示されず処理が止まる。
+         */
+        public String <a name="TreeView-fileSelectFrame">fileSelectFrame()</a>
+        {
+            File aFile = null;
+            String aFilePath = null;
+            JFileChooser filechooser = new JFileChooser();
+
+            int selected=0;
+            try
+            {
+                selected = filechooser.showOpenDialog(null);
+            }
+            catch(HeadlessException aHeadlessException)
+            {
+                System.out.println(aHeadlessException);
+            }
+
+            if(selected == JFileChooser.APPROVE_OPTION)
+            {
+                aFile = filechooser.getSelectedFile();
+                System.out.println("ファイルが選択されました = " + aFile.getName());
+            }
+            else if(selected == JFileChooser.CANCEL_OPTION)
+            {
+                System.out.println("キャンセルされました。");
+            }
+            else if (selected == JFileChooser.ERROR_OPTION)
+            {
+                System.out.println("エラー又は取り消しがありました。");
+            }
+
+            try
+            {
+                aFilePath = aFile.getAbsolutePath();
+            }
+            catch(NullPointerException aNullPointerException)
+            {
+                System.out.println(aNullPointerException);
+                System.exit(0);
+            }
+            return aFilePath;
+        }
+    }       
+        </pre>
+        <div class="belt">
+            <h3><a name="TreeController">TreeController</a>（コントローラ）</h3>
+        </div>
+        <pre>
+    package tree;
+
+    import java.awt.event.MouseEvent;
+    import java.awt.Point;
+    import mvc.Controller;
+
+    /**
+     * 樹状整列におけるコントローラ。
+     */
+    public class TreeController extends Controller
+    {
+        /**
+         * インスタンスを生成する。
+         */
+        public <a name="TreeController-TreeController">TreeController()</a>
+        {
+            super();
+        }
+
+        /**
+         * ダブルバッファのpicture画像を基に、木全体を全体を動かす。
+         * @param aMouseEvent マウスイベントのインスタンス
+         */
+        public void <a name="TreeController-mouseDragged">mouseDragged(MouseEvent aMouseEvent)</a>
+        {
+            super.mouseDragged(aMouseEvent);
+            return;
+        }
+
+        /**
+         * マウスクリックした位置の木の要素（文字列）を出力する。
+         * @param aMouseEvent マウスイベントのインスタンス
+         */
+        public void <a name="TreeController-mouseClicked">mouseClicked(MouseEvent aMouseEvent)</a>
+        {
+            Point aPoint = aMouseEvent.getPoint();
+            aPoint.translate(view.scrollAmount().x, view.scrollAmount().y);
+            TreeModel aTreeModel = (TreeModel)(this.model);
+            aTreeModel.mouseClicked(aPoint, aMouseEvent);
+            return;
+        }
+    }
+        </pre>
+        <div class="belt">
+            <h3><a name="tree.mf">tree.mf（マニフェストファイル）</a></h3>
+        </div>
+        <pre>
+    Manifest-Version: 1.0
+    X-COMMENT: Main-Class will be added automatically by build
+    Codebase: *.oracle.com
+    Permissions: sandbox
+    Application-Name: Forest
+    Main-Class: tree.Example
+        </pre>
+        <div class="belt">
+            <h3><a name="Makefile">Makefile（メイクファイル）</a></h3>
+        </div>
+        <pre>
+    ANT	= env LC_ALL=ja_JP.UTF-8 ant
+    all:
+        $(ANT) jar
+    clean:
+        $(ANT) clean
+    test:
+        $(ANT) run
+    install:
+        $(ANT) install
+    doc:
+        $(ANT) javadoc
+    zip:
+        $(ANT) zip
+
+    profile:
+        $(ANT) profile
+        </pre>
+        <div class="belt">
+            <h3><a name="build.xml">build.xml（ビルドファイル）</a></h3>
+        </div>
+        <pre>
+    &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+    &lt;project name="Example" default="default" basedir="."&gt;
+        &lt;import file="nbproject/build-impl.xml"/&gt;
+
+        &lt;property name="zipname" value="Forest" /&gt;
+        &lt;property name="package" value="tree" /&gt;
+        &lt;property name="mvc" value="mvc" /&gt;
+        &lt;property name="packagenames" value="${package},${mvc}" /&gt;
+        &lt;property name="destdir" value="./Classes" /&gt;
+        &lt;property name="docdir" value="./Javadoc" /&gt;
+        &lt;property name="zipname" value="${ant.project.name}" /&gt;
+        &lt;property name="profile" value="java.hprof" /&gt;
+        &lt;property name="icon" value="GenericApp" /&gt;
+        &lt;property name="icons" value="GenericApp.icns" /&gt;
+        &lt;property name="instdir" value="dist/${ant.project.name}.app/Contents/Java" /&gt;
+
+
+    &lt;/project&gt;
+        </pre>
+        <div class="belt">
+            <h3><a name="build-impl.xml">build-impl.xml</a></h3>
+        </div>
+        <pre>
+    &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+    &lt;project name="ButtonDemo-impl" default="default" basedir=".." xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3" xmlns:j2seproject2="http://www.netbeans.org/ns/j2se-project/2" xmlns:j2seproject1="http://www.netbeans.org/ns/j2se-project/1" xmlns:jaxws="http://www.netbeans.org/ns/jax-ws/1"&gt;
+        &lt;target name="default" depends="test,jar,javadoc" description="Build and test whole project."/&gt;
+        &lt;!--
+         ======================
+         INITIALIZATION SECTION
+         ======================
+         --&gt;
+        &lt;target name="-init-private" depends=""&gt;
+            &lt;property file="nbproject/private/config.properties"/&gt;
+            &lt;property file="nbproject/private/configs/${config}.properties"/&gt;
+            &lt;property file="nbproject/private/private.properties"/&gt;
+        &lt;/target&gt;
+        &lt;target name="-init-user" depends="-init-private"&gt;
+            &lt;property file="${user.properties.file}"/&gt;
+            &lt;property name="default.javac.source" value="1.4"/&gt;
+            &lt;property name="default.javac.target" value="1.4"/&gt;
+        &lt;/target&gt;
+        &lt;target name="-init-project" depends="-init-private,-init-user"&gt;
+            &lt;property file="nbproject/configs/${config}.properties"/&gt;
+            &lt;property file="nbproject/project.properties"/&gt;
+        &lt;/target&gt;
+        &lt;target name="-do-init" depends="-init-private,-init-user,-init-project,-init-macrodef-property"&gt;
+            &lt;available file="${tree.file}" property="tree.available"/&gt;
+            &lt;condition property="tree.available+main.class"&gt;
+                &lt;and&gt;
+                    &lt;isset property="tree.available"/&gt;
+                    &lt;isset property="main.class"/&gt;
+                    &lt;not&gt;
+                        &lt;equals arg1="${main.class}" arg2="" trim="true"/&gt;
+                    &lt;/not&gt;
+                &lt;/and&gt;
+            &lt;/condition&gt;
+            &lt;condition property="tree.available+main.class+mkdist.available"&gt;
+                &lt;and&gt;
+                    &lt;istrue value="${tree.available+main.class}"/&gt;
+                    &lt;isset property="libs.CopyLibs.classpath"/&gt;
+                &lt;/and&gt;
+            &lt;/condition&gt;
+            &lt;condition property="have.tests"&gt;
+                &lt;or/&gt;
+            &lt;/condition&gt;
+            &lt;condition property="have.sources"&gt;
+                &lt;or&gt;
+                    &lt;available file="${tree.dir}"/&gt;
+                &lt;/or&gt;
+            &lt;/condition&gt;
+            &lt;condition property="netbeans.home+have.tests"&gt;
+                &lt;and&gt;
+                    &lt;isset property="netbeans.home"/&gt;
+                    &lt;isset property="have.tests"/&gt;
+                &lt;/and&gt;
+            &lt;/condition&gt;
+            &lt;condition property="no.preview"&gt;
+                &lt;isfalse value="${javadoc.preview}"/&gt;
+            &lt;/condition&gt;
+            &lt;property name="run.jvmargs" value=""/&gt;
+            &lt;property name="javac.compilerargs" value=""/&gt;
+            &lt;property name="work.dir" value="${basedir}"/&gt;
+
+            &lt;property name="javac.debug" value="true"/&gt;
+            &lt;property name="javadoc.preview" value="true"/&gt;
+            &lt;property name="application.args" value=""/&gt;
+        &lt;/target&gt;
+        &lt;target name="-init-check" depends="-init-private,-init-user,-init-project,-do-init"&gt;
+            &lt;fail unless="tree.dir"&gt;Must set tree.dir&lt;/fail&gt;
+            &lt;fail unless="dist.dir"&gt;Must set dist.dir&lt;/fail&gt;
+            &lt;fail unless="dist.javadoc.dir"&gt;Must set dist.javadoc.dir&lt;/fail&gt;
+            &lt;fail unless="dist.jar"&gt;Must set dist.jar&lt;/fail&gt;
+        &lt;/target&gt;
+        &lt;target name="-init-macrodef-property"&gt;
+            &lt;macrodef name="property" uri="http://www.netbeans.org/ns/j2se-project/1"&gt;
+                &lt;attribute name="name"/&gt;
+                &lt;attribute name="value"/&gt;
+                &lt;sequential&gt;
+                    &lt;property name="@{name}" value="${@{value}}"/&gt;
+                &lt;/sequential&gt;
+            &lt;/macrodef&gt;
+        &lt;/target&gt;
+        &lt;target name="-init-presetdef-jar"&gt;
+            &lt;presetdef name="jar" uri="http://www.netbeans.org/ns/j2se-project/1"&gt;
+                &lt;jar
+                    jarfile="${package}.jar"
+                    basedir="${destdir}"
+                    manifest="${package}.mf"&gt;
+                    &lt;zipfileset src="${mvc}.jar" /&gt;
+                &lt;/jar&gt;
+            &lt;/presetdef&gt;
+        &lt;/target&gt;
+
+        &lt;target name="init" depends="-init-private,-init-user,-init-project,-do-init,-init-check,-init-macrodef-property,-init-presetdef-jar"/&gt;
+        &lt;!--
+         ===================
+         COMPILATION SECTION
+         ===================
+         --&gt;
+        &lt;target name="-pre-pre-compile" depends="init"&gt;
+            &lt;mkdir dir="${destdir}"/&gt;
+        &lt;/target&gt;
+
+        &lt;target name="compile" depends="init,-pre-pre-compile" description="Compile project."&gt;
+            &lt;javac
+                fork="true"
+                srcdir="${basedir}"
+                destdir="${destdir}"
+                includeAntRuntime="true"
+                encoding="UTF-8"
+                deprecation="on"
+                verbose="false"&gt;
+                &lt;compilerarg value="-J-Dfile.encoding=UTF8" /&gt;
+                &lt;compilerarg value="-Xlint:unchecked" /&gt;
+                &lt;classpath&gt;
+                    &lt;pathelement location="." /&gt;
+                    &lt;pathelement location="${mvc}.jar" /&gt;
+                &lt;/classpath&gt;
+            &lt;/javac&gt;
+        &lt;/target&gt;
+
+        &lt;target name="compile-single" depends="init"/&gt;
+        &lt;!--
+         ====================
+         JAR BUILDING SECTION
+         ====================
+         --&gt;
+        &lt;target name="-pre-pre-jar" depends="init"&gt;
+            &lt;dirname property="dist.jar.dir" file="${dist.jar}"/&gt;
+            &lt;mkdir dir="${dist.jar.dir}"/&gt;
+        &lt;/target&gt;
+
+        &lt;target name="-do-jar-without-tree" depends="init,compile" unless="tree.available"&gt;
+            &lt;j2seproject1:jar/&gt;
+        &lt;/target&gt;
+        &lt;target name="-do-jar-with-tree" depends="init,compile" if="tree.available" unless="tree.available+main.class"&gt;
+            &lt;j2seproject1:jar tree="${tree.file}"/&gt;
+        &lt;/target&gt;
+        &lt;target name="-do-jar-with-mainclass" depends="init,compile" if="tree.available+main.class" unless="tree.available+main.class+mkdist.available"&gt;
+            &lt;j2seproject1:jar tree="${tree.file}"&gt;
+                &lt;j2seproject1:tree&gt;
+                    &lt;j2seproject1:attribute name="Main-Class" value="${main.class}"/&gt;
+                &lt;/j2seproject1:tree&gt;
+            &lt;/j2seproject1:jar&gt;
+            &lt;echo&gt;To run this application from the command line without Ant, try:&lt;/echo&gt;
+            &lt;property name="destdir.resolved" location="${destdir}"/&gt;
+            &lt;property name="dist.jar.resolved" location="${dist.jar}"/&gt;
+            &lt;pathconvert property="run.classpath.with.dist.jar"&gt;
+                &lt;path path="${run.classpath}"/&gt;
+                &lt;map from="${destdir.resolved}" to="${dist.jar.resolved}"/&gt;
+            &lt;/pathconvert&gt;
+            &lt;echo&gt;java -cp "${run.classpath.with.dist.jar}" ${main.class}&lt;/echo&gt;
+        &lt;/target&gt;
+        &lt;target name="-do-jar-with-libraries" depends="init,compile" if="tree.available+main.class+mkdist.available"&gt;
+            &lt;property name="destdir.resolved" location="${destdir}"/&gt;
+            &lt;pathconvert property="run.classpath.without.destdir"&gt;
+                &lt;path path="${run.classpath}"/&gt;
+                &lt;map from="${destdir.resolved}" to=""/&gt;
+            &lt;/pathconvert&gt;
+            &lt;pathconvert property="jar.classpath" pathsep=" "&gt;
+                &lt;path path="${run.classpath.without.destdir}"/&gt;
+                &lt;chainedmapper&gt;
+                    &lt;flattenmapper/&gt;
+                    &lt;globmapper from="*" to="lib/*"/&gt;
+                &lt;/chainedmapper&gt;
+            &lt;/pathconvert&gt;
+            &lt;taskdef classname="org.netbeans.modules.java.j2seproject.copylibstask.CopyLibs" name="copylibs" classpath="${libs.CopyLibs.classpath}"/&gt;
+            &lt;copylibs
+                tree="${tree.file}"
+                runtimeclasspath="${run.classpath.without.destdir}"
+                jarfile="${dist.jar}"
+                compress="${jar.compress}"&gt;
+                &lt;fileset dir="${destdir}"/&gt;
+                &lt;tree&gt;
+                    &lt;attribute name="Main-Class" value="${main.class}"/&gt;
+                    &lt;attribute name="Class-Path" value="${jar.classpath}"/&gt;
+                &lt;/tree&gt;
+            &lt;/copylibs&gt;
+            &lt;echo&gt;To run this application from the command line without Ant, try:&lt;/echo&gt;
+            &lt;property name="dist.jar.resolved" location="${dist.jar}"/&gt;
+            &lt;echo&gt;java -jar "${dist.jar.resolved}"&lt;/echo&gt;
+        &lt;/target&gt;
+
+        &lt;target name="jar" depends="init,compile,-do-jar-with-tree,-do-jar-without-tree,-do-jar-with-mainclass,-do-jar-with-libraries" description="Build JAR."/&gt;
+        &lt;!--
+         =================
+         EXECUTION SECTION
+         =================
+         --&gt;
+        &lt;target name="run" depends="init,compile" description="Run a main class."&gt;
+
+            &lt;exec executable="java" spawn="false"&gt;
+                &lt;arg line="-Dfile.encoding=UTF-8 -Xmx512m -Xss1024k -jar ${package}.jar" /&gt;
+            &lt;/exec&gt;
+
+        &lt;/target&gt;
+        &lt;!--
+         =================
+         DEBUGGING SECTION
+         =================
+         --&gt;
+        &lt;target name="-debug-start-debugger" if="netbeans.home" depends="init"&gt;
+            &lt;j2seproject1:nbjpdastart name="${debug.class}"/&gt;
+        &lt;/target&gt;
+        &lt;target name="-debug-start-debuggee" depends="init,compile"&gt;
+            &lt;j2seproject3:debug&gt;
+                &lt;customize&gt;
+                    &lt;arg line="${application.args}"/&gt;
+                &lt;/customize&gt;
+            &lt;/j2seproject3:debug&gt;
+        &lt;/target&gt;
+        &lt;target name="debug" if="netbeans.home" depends="init,compile,-debug-start-debugger,-debug-start-debuggee" description="Debug project in IDE."/&gt;
+        &lt;target name="-debug-start-debugger-stepinto" if="netbeans.home" depends="init"&gt;
+            &lt;j2seproject1:nbjpdastart stopclassname="${main.class}"/&gt;
+        &lt;/target&gt;
+        &lt;target name="debug-stepinto" if="netbeans.home" depends="init,compile,-debug-start-debugger-stepinto,-debug-start-debuggee"/&gt;
+        &lt;target name="-debug-start-debuggee-single" if="netbeans.home" depends="init,compile-single"&gt;
+            &lt;fail unless="debug.class"&gt;Must select one file in the IDE or set debug.class&lt;/fail&gt;
+            &lt;j2seproject3:debug classname="${debug.class}"/&gt;
+        &lt;/target&gt;
+        &lt;target name="debug-single" if="netbeans.home" depends="init,compile-single,-debug-start-debugger,-debug-start-debuggee-single"/&gt;
+        &lt;target name="-pre-debug-fix" depends="init"&gt;
+            &lt;property name="javac.includes" value="${fix.includes}.java"/&gt;
+        &lt;/target&gt;
+        &lt;target name="-do-debug-fix" if="netbeans.home" depends="init,-pre-debug-fix,compile-single"&gt;
+            &lt;j2seproject1:nbjpdareload/&gt;
+        &lt;/target&gt;
+        &lt;target name="debug-fix" if="netbeans.home" depends="init,-pre-debug-fix,-do-debug-fix"/&gt;
+        &lt;!--
+         ===============
+         JAVADOC SECTION
+         ===============
+         --&gt;
+        &lt;target name="javadoc" depends="init" description="Build Javadoc." &gt;
+            &lt;mkdir dir="${docdir}" /&gt;
+            &lt;javadoc
+                locale="en_US"
+                sourcepath="${basedir}"
+                destdir="${docdir}"
+                packagenames="${packagenames}"
+                author="true"
+                version="true"
+                charset="UTF-8"
+                encoding="UTF-8"
+                docencoding="UTF-8"
+                access="private"&gt;
+                &lt;doctitle&gt;${doc-title}&lt;/doctitle&gt;
+                &lt;bottom&gt;${copyright}&lt;/bottom&gt;
+                &lt;classpath&gt;
+                    &lt;pathelement location="." /&gt;
+                    &lt;pathelement location="${mvc}.jar" /&gt;
+                &lt;/classpath&gt;
+            &lt;/javadoc&gt;
+            &lt;echo&gt;on ${date} at ${time}&lt;/echo&gt;
+        &lt;/target&gt;
+        &lt;!--
+         =========================
+         JUNIT COMPILATION SECTION
+         =========================
+         --&gt;
+        &lt;target name="-pre-pre-compile-test" if="have.tests" depends="init,compile"&gt;
+            &lt;mkdir dir="${Classes.test.dir}"/&gt;
+        &lt;/target&gt;
+        &lt;target name="-do-compile-test" if="have.tests" depends="init,compile,-pre-pre-compile-test"&gt;
+            &lt;j2seproject3:javac srcdir="" destdir="${Classes.test.dir}" debug="true" classpath="${javac.test.classpath}"/&gt;
+            &lt;copy todir="${Classes.test.dir}"/&gt;
+        &lt;/target&gt;
+        &lt;target name="compile-test" depends="init,compile,-pre-pre-compile-test,-do-compile-test"/&gt;
+        &lt;target name="-do-compile-test-single" if="have.tests" depends="init,compile,-pre-pre-compile-test"&gt;
+            &lt;fail unless="javac.includes"&gt;Must select some files in the IDE or set javac.includes&lt;/fail&gt;
+            &lt;j2seproject3:javac srcdir="" destdir="${Classes.test.dir}" debug="true" classpath="${javac.test.classpath}"&gt;
+                &lt;customize&gt;
+                    &lt;patternset includes="${javac.includes}"/&gt;
+                &lt;/customize&gt;
+            &lt;/j2seproject3:javac&gt;
+            &lt;copy todir="${Classes.test.dir}"/&gt;
+        &lt;/target&gt;
+        &lt;target name="compile-test-single" depends="init,compile,-pre-pre-compile-test,-do-compile-test-single"/&gt;
+        &lt;!--
+         =======================
+         JUNIT EXECUTION SECTION
+         =======================
+         --&gt;
+        &lt;target name="-pre-test-run" if="have.tests" depends="init"&gt;
+            &lt;mkdir dir="${Classes.test.results.dir}"/&gt;
+        &lt;/target&gt;
+        &lt;target name="-do-test-run" if="have.tests" depends="init,compile-test,-pre-test-run"&gt;
+            &lt;j2seproject3:junit/&gt;
+        &lt;/target&gt;
+        &lt;target name="-post-test-run" if="have.tests" depends="init,compile-test,-pre-test-run,-do-test-run"&gt;
+            &lt;fail if="tests.failed"&gt;Some tests failed; see details above.&lt;/fail&gt;
+        &lt;/target&gt;
+        &lt;target name="test" depends="init,compile-test,-pre-test-run,-do-test-run,-post-test-run" description="Run unit tests."/&gt;
+        &lt;target name="-pre-test-run-single" if="have.tests" depends="init"&gt;
+            &lt;mkdir dir="${Classes.test.results.dir}"/&gt;
+        &lt;/target&gt;
+        &lt;target name="-do-test-run-single" if="have.tests" depends="init,compile-test-single,-pre-test-run-single"&gt;
+            &lt;fail unless="test.includes"&gt;Must select some files in the IDE or set test.includes&lt;/fail&gt;
+            &lt;j2seproject3:junit includes="${test.includes}"/&gt;
+        &lt;/target&gt;
+        &lt;target name="-post-test-run-single" if="have.tests" depends="init,compile-test-single,-pre-test-run-single,-do-test-run-single"&gt;
+            &lt;fail if="tests.failed"&gt;Some tests failed; see details above.&lt;/fail&gt;
+        &lt;/target&gt;
+
+        &lt;!--
+         ===============
+         CLEANUP SECTION
+         ===============
+         --&gt;
+        &lt;target name="clean" depends="init"&gt;
+            &lt;delete dir="${destdir}"/&gt;
+            &lt;delete dir="${dist.dir}"/&gt;
+            &lt;delete dir="${docdir}" /&gt;
+            &lt;delete file="${profile}" /&gt;
+            &lt;delete file="${package}.jar" /&gt;
+            &lt;delete file="../${zipname}.zip" /&gt;
+        &lt;/target&gt;
+        &lt;!--
+         ===============
+         INSTALL SECTION
+         ===============
+         --&gt;
+        &lt;taskdef name="bundleapp" classname="com.oracle.appbundler.AppBundlerTask" classpath="lib/appbundler-1.0ea.jar" /&gt;
+        &lt;target name="-post-install"&gt;
+            &lt;bundleapp outputdirectory="dist"
+                name="Example"
+                displayname="Example"
+                identifier="tree.Example"
+                mainclassname="tree.Example"&gt;
+                &lt;classpath file="dist/tree.jar" /&gt;
+            &lt;/bundleapp&gt;
+            &lt;copy file="${package}.jar" todir="${instdir}" /&gt;
+            &lt;exec executable="chmod"&gt;
+                &lt;arg line="755 ${instdir}/../MacOS/JavaAppLauncher" /&gt;
+            &lt;/exec&gt;
+        &lt;/target&gt;
+        &lt;target name="install" depends="-pre-pre-jar,-post-install"/&gt;
+        &lt;!--
+         ===============
+         ZIP SECTION
+         ===============
+         --&gt;
+        &lt;target name="zip" depends="clean" description="make zip file"&gt;
+            &lt;delete file="../${zipname}.zip" /&gt;
+            &lt;zip destfile="../${zipname}.zip"&gt;
+                &lt;zipfileset dir="." prefix="${zipname}" /&gt;
+            &lt;/zip&gt;
+        &lt;/target&gt;
+        &lt;!--
+         ===============
+         PROFILE SECTION
+         ===============
+         --&gt;
+        &lt;target name="profile" depends="jar" description="make profile"&gt;
+            &lt;exec executable="java" spawn="false"&gt;
+                &lt;arg line="-Dfile.encoding=UTF-8 -Xmx512m -Xss1024k -agentlib:hprof=depth=10,file=${profile},format=b -jar ${package}.jar" /&gt;
+            &lt;/exec&gt;
+            &lt;exec executable="jhat" spawn="false"&gt;
+                &lt;arg line="-J-Xmx768m -port 7000 ${profile}" /&gt;
+            &lt;/exec&gt;
+            &lt;echo&gt;on ${date} at ${time}&lt;/echo&gt;
+        &lt;/target&gt;
+
+
+    &lt;/project&gt;
+        </pre>
+        <div class="belt">
+            <h3><a name="project.xml">project.xml</a></h3>
+        </div>
+        <pre>
+    &lt;?xml version="1.0" encoding="utf-8" standalone="no"?&gt;
+    &lt;project xmlns="http://www.netbeans.org/ns/project/1"&gt;
+        &lt;type&gt;org.netbeans.modules.java.j2seproject&lt;/type&gt;
+        &lt;configuration&gt;
+            &lt;data xmlns="http://www.netbeans.org/ns/j2se-project/3"&gt;
+                &lt;name&gt;Example&lt;/name&gt;
+                &lt;minimum-ant-version&gt;1.6.5&lt;/minimum-ant-version&gt;
+                &lt;source-roots&gt;
+                    &lt;root id="tree.dir" /&gt;
+                &lt;/source-roots&gt;
+                &lt;test-roots /&gt;
+            &lt;/data&gt;
+        &lt;/configuration&gt;
+    &lt;/project&gt;
+        </pre>
+        <div class="belt">
+            <h3><a name="project.properties">project.properties</a></h3>
+        </div>
+        <pre>
+    build.classes.dir=${build.dir}/classes
+    build.classes.excludes=**/*.java,**/*.form
+    build.dir=build
+    build.generated.dir=${build.dir}/generated
+    build.sysclasspath=ignore
+    build.test.classes.dir=${build.dir}/test/classes
+    build.test.results.dir=${build.dir}/test/results
+    debug.classpath=\
+        ${run.classpath}
+    dist.dir=dist
+    dist.jar=${dist.dir}/Example.jar
+    dist.javadoc.dir=${dist.dir}/javadoc
+    jar.compress=false
+    javac.classpath=
+    javac.compilerargs=
+    javac.deprecation=false
+    javac.source=1.5
+    javac.target=1.5
+    javadoc.additionalparam=
+    javadoc.author=false
+    javadoc.encoding=
+    javadoc.noindex=false
+    javadoc.nonavbar=false
+    javadoc.notree=false
+    javadoc.private=false
+    javadoc.splitindex=true
+    javadoc.use=true
+    javadoc.version=false
+    javadoc.windowtitle=
+    main.class=tree.Example
+    meta.inf.dir=${tree.dir}/META-INF
+    platform.active=default_platform
+    run.classpath=\
+        ${javac.classpath}:\
+        ${build.classes.dir}
+    run.jvmargs=
+    tree.dir=tree
+    manifest.file=tree.mf
+    manifest.available=true
+        </pre>
+        <hr>
+        <div class="right-small">Copyright 2014 Project Gomadare, Updated: 2014/07/13</div>
+    </body>
+</html>

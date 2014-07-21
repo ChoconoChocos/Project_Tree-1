@@ -1,0 +1,716 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="Content-Style-Type" content="text/css" />
+        <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+        <meta name="keywords" content="Gomadare"/>
+        <meta name="description" content="ソフトウェア工学IIの小テスト"/>
+        <meta name="author" content="Gomadare"/>
+        <link rev="made" href="index.html"/>
+        <link rel="index" href="index.html"/>
+        <link rel="stylesheet" href="../style.css" type="text/css" />
+        <title>ソフトウェア工学IIの小テスト「樹状整列」テスト仕様書</title>
+    </head>
+    <body>
+        <div id="menu">
+            <ul>
+                <li><a href="../index.html">ホーム</a></li>
+                <li><a href="../Requirement/index.html">要求仕様書</a></li>
+                <li><a href="../DevelopmentPlan/index.html">開発計画書</a></li>
+                <li><a href="../BasicDesign/index.html">基本設計書</a></li>
+                <li><a href="../DetailDesign/index.html">詳細設計書</a></li>
+                <li><a href="../TestSpecification/index.html" class="current">テスト仕様書</a></li>
+                <li><a href="../TestResult/index.html">テスト結果</a></li>
+                <li><a href="../DevelopmentResult/index.html">開発実績</a></li>
+                <li><a href="../Program/index.html">プログラム</a></li>
+                <li><a href="../Manual/index.html">マニュアル</a></li>
+            </ul>
+        </div>
+        <hr>
+        <h2>ソフトウェア工学IIの小テスト「樹状整列」テスト仕様書</h2>
+        <ul>
+            <li><a href="#Example">Example</a>（メインクラス）</li>
+            <li><a href="#Element">Element</a></li>
+            <li><a href="#Constants">Constants</a></li>
+            <li><a href="#TreeModel">TreeModel</a>（モデル）</li>
+            <li><a href="#TreeView">TreeView</a>（ビュー）</li>
+            <li><a href="#TreeController">TreeController</a>（コントローラ）</li>
+        </ul>
+        <div class="belt">
+            <h3><a name="Example" href="../Program/index.html#Example">Example（メインクラス）</a></h3>
+        </div>
+        <table summary="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <table border="1" summary="table">
+                            <tbody>
+                                <tr>
+                                    <th class="left-padding" abbr="1">属性（インスタンス変数）</th>
+                                    <th class="left-padding" abbr="2">束縛</th>
+                                    <th class="left-padding" abbr="3">分類</th>
+                                    <th class="left-padding" abbr="4">説明</th>
+                                    <th class="left-padding" abbr="5">テスト結果</th>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>なし</code></td>
+                                    <td class="left-padding"><code>なし</code></td>
+                                    <td class="left-padding"><code>なし</code></td>
+                                    <td class="left-padding">なし</td>
+                                    <td class="left-padding">なし</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table summary="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <table border="1" summary="table">
+                            <tbody>
+                                <tr>
+                                    <th class="left-padding" abbr="1">メソッド（操作）</th>
+                                    <th class="left-padding" abbr="2">応答</th>
+                                    <th class="left-padding" abbr="3">分類</th>
+                                    <th class="left-padding" abbr="4">説明</th>
+                                    <th class="left-padding" abbr="5">テスト結果</th>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Example-main">main(String[] args)</a></code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding"><code>public static</code></td>
+                                    <td class="left-padding"></td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="belt">
+            <h3><a name="Element" href="../Program/index.html#Element">Element</a></h3>
+        </div>
+        <table summary="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <table border="1" summary="table">
+                            <tbody>
+                                <tr>
+                                    <th class="left-padding" abbr="1">属性（インスタンス変数）</th>
+                                    <th class="left-padding" abbr="2">束縛</th>
+                                    <th class="left-padding" abbr="3">分類</th>
+                                    <th class="left-padding" abbr="4">説明</th>
+                                    <th class="left-padding" abbr="5">テスト結果</th>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>parents</code></td>
+                                    <td class="left-padding"><code>ArrayList&lt;Integer&gt;</code></td>
+                                    <td class="left-padding"><code>private</code></td>
+                                    <td class="left-padding">ノードの親を格納するフィールド</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>children</code></td>
+                                    <td class="left-padding"><code>ArrayList&lt;Integer&gt;</code></td>
+                                    <td class="left-padding"><code>private</code></td>
+                                    <td class="left-padding">ノードの子を格納するフィールド</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>aNodeNumber</code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>private</code></td>
+                                    <td class="left-padding">自身の番号を束縛する。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>aNodeName</code></td>
+                                    <td class="left-padding"><code>String</code></td>
+                                    <td class="left-padding"><code>private</code></td>
+                                    <td class="left-padding">自身のノードの名前を束縛する。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>aPosition</code></td>
+                                    <td class="left-padding"><code>Point</code></td>
+                                    <td class="left-padding"><code>private</code></td>
+                                    <td class="left-padding">描画位置を束縛する。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>afterPosition</code></td>
+                                    <td class="left-padding"><code>Point</code></td>
+                                    <td class="left-padding"><code>private</code></td>
+                                    <td class="left-padding">移動後の描画位置を束縛する。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>aHeight</code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>private</code></td>
+                                    <td class="left-padding">自身の高さを束縛する。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>aWidth</code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>private</code></td>
+                                    <td class="left-padding">自身の幅を束縛する。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>index</code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>private static</code></td>
+                                    <td class="left-padding">変位させる座標を文字列のy座標変位に設定し、束縛する。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table summary="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <table border="1" summary="table">
+                            <tbody>
+                                <tr>
+                                    <th class="left-padding" abbr="1">メソッド（操作）</th>
+                                    <th class="left-padding" abbr="2">応答</th>
+                                    <th class="left-padding" abbr="3">分類</th>
+                                    <th class="left-padding" abbr="4">説明</th>
+                                    <th class="left-padding" abbr="5">テスト結果</th>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-Element">Element(int number, String name)</a></code></td>
+                                    <td class="left-padding"><code>instance</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">指定されたノード番号、ノードの名前と描画する位置を設定し、描画における詳細設定をする。<br>
+                                        @param number 指定されたノード番号<br>
+                                        @param name 指定されたノードの名前</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-setParents">setParents(int parents)</a></code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">指定された親のノード番号をリストに格納する。<br>
+                                        @param parents 親のノード番号。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-getParents">getParents()</a></code></td>
+                                    <td class="left-padding"><code>ArrayList&lt;Integer&gt;</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">自分の親をアレイリストで返す。<br>
+                                        @return 自分の親のアレイリスト。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-setChildren">setChildren(int child)</a></code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">指定された子のノード番号をリストに格納する。<br>
+                                        @param child 子のノード番号。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-resetChildren">resetChildren(ArrayList&lt;Integer&gt; aList)</a></code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">指定された子のリストを格納する。<br>
+                                        @param aList 指定された子のリスト。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-getChildren">getChildren()</a></code></td>
+                                    <td class="left-padding">ArrayList&lt;Integer&gt;<code></code></td>
+                                    <td class="left-padding">public<code></code></td>
+                                    <td class="left-padding">自分の子をアレイリストで返す。<br>
+                                        @return 自分の子のアレイリスト。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-getNodeNumber">getNodeNumber()</a></code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">自分のノード番号を返す。<br>
+                                        @return 自分のノード番号。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-setHeight">setHeight(int aNumber)</a></code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">指定された高さに設定する。<br>
+                                        @param aNumber 指定された高さ。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-getHeight">getHeight()</a></code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">自分の高さを返す。<br>
+                                        @return 自分の高さ。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-setWidth">setWidth(int aNumber)</a></code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">指定された幅に設定する。<br>
+                                        @param aNumber 指定された子要素のノード番号。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-getWidth">getWidth()</a></code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding">自分の幅を返す。<br>
+                                        @return 自分の幅。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-getNodeName">getNodeName()</a></code></td>
+                                    <td class="left-padding"><code>String</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">自分のノードの名前を返す。<br>
+                                        @return 自分のノードの名前。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-setPosition">setPosition(Point aPoint)</a></code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">指定されたポイント（座標）に描画位置（初期位置）を設定する。<br>
+                                        @param aPoint 指定された座標。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-getPosition">getPosition()</a></code></td>
+                                    <td class="left-padding"><code>Point</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">描画位置（初期位置）をポイント（座標）で返す。<br>
+                                        @return 描画位置のポイント（座標）。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-setAfterPosition">setAfterPosition(Point aPoint)</a></code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">指定されたポイント（座標）に描画位置（移動後の位置）を設定する。<br>
+                                        @param aPoint 指定された座標。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#Element-getAfterPosition">getAfterPosition()</a></code></td>
+                                    <td class="left-padding"><code>Point</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">描画位置（移動後の位置）をポイント（座標）で返す。<br>
+                                        @return 描画位置のポイント（座標）。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="belt">
+            <h3><a name="Constants" href="../Program/index.html#Constants">Constants</a></h3>
+        </div>
+        <table summary="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <table border="1" summary="table">
+                            <tbody>
+                                <tr>
+                                    <th class="left-padding" abbr="1">属性（インスタンス変数）</th>
+                                    <th class="left-padding" abbr="2">束縛</th>
+                                    <th class="left-padding" abbr="3">分類</th>
+                                    <th class="left-padding" abbr="4">説明</th>
+                                    <th class="left-padding" abbr="5">テスト結果</th>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>FONT_SIZE</code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>public static final</code></td>
+                                    <td class="left-padding">文字列のフォントサイズ。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>DIALOG_WIDTH</code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>public static final</code></td>
+                                    <td class="left-padding">ファイル選択ダイアログの幅。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>DIALOG_HEIGHT</code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>public static final</code></td>
+                                    <td class="left-padding">ファイル選択ダイアログの高さ。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>WINDOW_WIDTH</code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>public static final</code></td>
+                                    <td class="left-padding">木を描画するウィンドウの幅。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>WINDOW_HEIGHT</code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>public static final</code></td>
+                                    <td class="left-padding">木を描画するウィンドウの高さ。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>RECT_BLANKSPASE</code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>public static final</code></td>
+                                    <td class="left-padding">文字列と四角との間隔。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>HEIDHT_SPASE</code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>public static final</code></td>
+                                    <td class="left-padding">四角との高さ間隔。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>DISPLACEMENT</code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>public static final</code></td>
+                                    <td class="left-padding">文字列のy座標変位</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table summary="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <table border="1" summary="table">
+                            <tbody>
+                                <tr>
+                                    <th class="left-padding" abbr="1">メソッド（操作）</th>
+                                    <th class="left-padding" abbr="2">応答</th>
+                                    <th class="left-padding" abbr="3">分類</th>
+                                    <th class="left-padding" abbr="4">説明</th>
+                                    <th class="left-padding" abbr="5">テスト結果</th>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>なし</code></td>
+                                    <td class="left-padding"><code>なし</code></td>
+                                    <td class="left-padding"><code>なし</code></td>
+                                    <td class="left-padding">なし</td>
+                                    <td class="left-padding">なし</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="belt">
+            <h3><a name="TreeModel" href="../Program/index.html#TreeModel">TreeModel（モデル）</a></h3>
+        </div>
+        <table summary="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <table border="1" summary="table">
+                            <tbody>
+                                <tr>
+                                    <th class="left-padding" abbr="1">属性（インスタンス変数）</th>
+                                    <th class="left-padding" abbr="2">束縛</th>
+                                    <th class="left-padding" abbr="3">分類</th>
+                                    <th class="left-padding" abbr="4">説明</th>
+                                    <th class="left-padding" abbr="5">テスト結果</th>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>elementList</code></td>
+                                    <td class="left-padding"><code>ArrayList&lt;Element&gt;</code></td>
+                                    <td class="left-padding"><code>private</code></td>
+                                    <td class="left-padding">ノード(Element)をリストで束縛する。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>sortElementList</code></td>
+                                    <td class="left-padding"><code>ArrayList&lt;Element&gt;</code></td>
+                                    <td class="left-padding"><code>private</code></td>
+                                    <td class="left-padding">ノード(Element)をリストで束縛する（ソートしたもの）。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>indexSort</code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>private static</code></td>
+                                    <td class="left-padding">y座標を設定するための値。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table summary="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <table border="1" summary="table">
+                            <tbody>
+                                <tr>
+                                    <th class="left-padding" abbr="1">メソッド（操作）</th>
+                                    <th class="left-padding" abbr="2">応答</th>
+                                    <th class="left-padding" abbr="3">分類</th>
+                                    <th class="left-padding" abbr="4">説明</th>
+                                    <th class="left-padding" abbr="5">テスト結果</th>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#TreeModel-TreeModel">TreeModel()</a></code></td>
+                                    <td class="left-padding"><code>instance</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">インスタンスを生成して初期化して応答する。<br>
+                                        またテキストファイルを読み込み、樹の要素をエレメントに設定し、描画する順にソートする。<br>
+                                        @param aFilePath 指定されたファイルパス。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#TreeModel-setElement">setElement(String aFilePath)</a></code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">指定されたファイルパスを読み込み、要素を設定する。<br>
+                                        @param aFilePath 指定されたファイルパス。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#TreeModel-sort">sort()</a></code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">子をアルファベット順にソートしたのち描画する順にソートしアレイリストに設定する。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#TreeModel-searchChild">searchChild(Element aElement)</a></code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">指定された要素から再帰的に子をたどっていき、アレイリストに格納する。<br>
+                                        またノードを描くx座標とy座標を設定する。<br>
+                                        @param aElement 指定された要素。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#TreeModel-mouseClicked">mouseClicked(Point aPoint, MouseEvent aMouseEvent)</a></code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">マウスクリックした位置を座標取得し、その座標範囲に要素があれば出力<br>
+                                        @param aPoint ピクチャ座標<br>
+                                        @param aMouseEvent マウスのイベント</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#TreeModel-getElementList">getElementList()</a></code></td>
+                                    <td class="left-padding"><code>ArrayList&lt;Element&gt;</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">ノードのリストを返す。<br>
+                                        @return ノードのリスト。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#TreeModel-getElementSortList">getElementSortList()</a></code></td>
+                                    <td class="left-padding"><code>ArrayList&lt;Element&gt;</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">ノードをソートしたリストを返す。<br>
+                                        @return ノードのソートリスト。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="belt">
+            <h3><a name="TreeView" href="../Program/index.html#TreeView">TreeView（ビュー）</a></h3>
+        </div>
+        <table summary="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <table border="1" summary="table">
+                            <tbody>
+                                <tr>
+                                    <th class="left-padding" abbr="1">属性（インスタンス変数）</th>
+                                    <th class="left-padding" abbr="2">束縛</th>
+                                    <th class="left-padding" abbr="3">分類</th>
+                                    <th class="left-padding" abbr="4">説明</th>
+                                    <th class="left-padding" abbr="5">テスト結果</th>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>aTreeModel</code></td>
+                                    <td class="left-padding"><code>TreeModel</code></td>
+                                    <td class="left-padding"><code>protected</code></td>
+                                    <td class="left-padding">情報操作をするTreeModelのインスタンスを束縛する。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>aTreeController</code></td>
+                                    <td class="left-padding"><code>TreeController</code></td>
+                                    <td class="left-padding"><code>protected</code></td>
+                                    <td class="left-padding">制御を司るTreeControllerのインスタンスを束縛する。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>index</code></td>
+                                    <td class="left-padding"><code>int</code></td>
+                                    <td class="left-padding"><code>private static</code></td>
+                                    <td class="left-padding"></td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table summary="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <table border="1" summary="table">
+                            <tbody>
+                                <tr>
+                                    <th class="left-padding" abbr="1">メソッド（操作）</th>
+                                    <th class="left-padding" abbr="2">応答</th>
+                                    <th class="left-padding" abbr="3">分類</th>
+                                    <th class="left-padding" abbr="4">説明</th>
+                                    <th class="left-padding" abbr="5">テスト結果</th>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#TreeView-TreeView">TreeView(TreeModel aTreeModel, TreeController aTreeController)</a></code></td>
+                                    <td class="left-padding"><code>instance</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">インスタンスを生成して応答する。<br>
+                                        指定されたモデルの依存物となり、指定されたコントローラにモデルとビューを設定し、スクロール量をを(0, 0)に設定する。<br>
+                                        @param aTreeModel 指定されたツリーモデル<br>
+                                        @param aTreeController 指定されたツリーコントローラ</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#TreeView-paintComponent">paintComponent(Graphics baseGraphics)</a></code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">指定されたグラフィクスに背景色（白色）でビュー全体を塗り、その上ににモデルの内容物を描画する。<br>
+                                        スクロール量に応じてモデル画像(picture)をパネル内に描画する。<br>
+                                        @param baseGraphics 指定されたグラフィックス</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#TreeView-fileSelectFrame">fileSelectFrame()</a></code></td>
+                                    <td class="left-padding"><code>String</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">読み込むファイルを指定させるウィンドウを表示し、指定されたファイルパスを文字列を返す。<br>
+                                        @return 読み込んだファイルのパスの文字列。<br>
+                                        バグ：JFileChooser.showOpenDialogの中で選択ダイアログが表示されず処理が止まる。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="belt">
+            <h3><a name="TreeController" href="../Program/index.html#TreeController">TreeController（コントローラ）</a></h3>
+        </div>
+        <table summary="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <table border="1" summary="table">
+                            <tbody>
+                                <tr>
+                                    <th class="left-padding" abbr="1">属性（インスタンス変数）</th>
+                                    <th class="left-padding" abbr="2">束縛</th>
+                                    <th class="left-padding" abbr="3">分類</th>
+                                    <th class="left-padding" abbr="4">説明</th>
+                                    <th class="left-padding" abbr="5">テスト結果</th>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code>なし</code></td>
+                                    <td class="left-padding"><code>なし</code></td>
+                                    <td class="left-padding"><code>なし</code></td>
+                                    <td class="left-padding">なし</td>
+                                    <td class="left-padding">なし</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table summary="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <table border="1" summary="table">
+                            <tbody>
+                                <tr>
+                                    <th class="left-padding" abbr="1">メソッド（操作）</th>
+                                    <th class="left-padding" abbr="2">応答</th>
+                                    <th class="left-padding" abbr="3">分類</th>
+                                    <th class="left-padding" abbr="4">説明</th>
+                                    <th class="left-padding" abbr="5">テスト結果</th>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#TreeController-TreeController">TreeController()</a></code></td>
+                                    <td class="left-padding"><code>instance</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">インスタンスを生成する。</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#TreeController-mouseDragged">mouseDragged(MouseEvent aMouseEvent)</a></code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">ダブルバッファのpicture画像を基に、木全体を全体を動かす。<br>
+                                        @param aMouseEvent マウスイベントのインスタンス</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                                <tr>
+                                    <td class="left-padding"><code><a href="../Program/index.html#TreeController-mouseClicked">mouseClicked(MouseEvent aMouseEvent)</a></code></td>
+                                    <td class="left-padding"><code>void</code></td>
+                                    <td class="left-padding"><code>public</code></td>
+                                    <td class="left-padding">マウスクリックした位置の木の要素（文字列）を出力する。<br>
+                                        @param aMouseEvent マウスイベントのインスタンス</td>
+                                    <td class="left-padding">良好（2014年7月00日）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <div class="right-small">Copyright 2014 Project Gomadare, Updated: 2014/07/13</div>
+    </body>
+</html>
