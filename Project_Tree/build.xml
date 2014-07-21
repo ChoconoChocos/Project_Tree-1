@@ -2,7 +2,7 @@
 <project name="Example" default="default" basedir=".">
     <import file="nbproject/build-impl.xml"/>
 	
-	<property name="zipname" value="tree" />
+	<property name="zipname" value="forest" />
 	<property name="package" value="tree" />
 	<property name="mvc" value="mvc" />
 	<property name="packagenames" value="${package},${mvc}" />
