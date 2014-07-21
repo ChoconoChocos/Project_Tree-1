@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Example" default="default" basedir=".">
+    <import file="nbproject/build-impl.xml"/>
+	
+	<property name="zipname" value="tree" />
+	<property name="package" value="tree" />
+	<property name="mvc" value="mvc" />
+	<property name="packagenames" value="${package},${mvc}" />
+	<property name="destdir" value="./Classes" />
+	<property name="docdir" value="./Javadoc" />
+	<property name="zipname" value="${ant.project.name}" />
+	<property name="profile" value="java.hprof" />
+	<property name="icon" value="GenericApp" />
+	<property name="icons" value="GenericApp.icns" />
+	<property name="instdir" value="dist/${ant.project.name}.app/Contents/Java" />
+	
+	
+</project>
